@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Pac-Cat</title>
+    <link rel="stylesheet" href="pac-cat.css" />
+  </head>
+  <body>
+    <div id="mundo"></div>
+    <div id="gato"></div>
+    <div id="perro"></div>
+    <script type="text/javascript">
+
+      //Variables globales indispensables
+      var puntaje = 0;
+      var vidas = 3;
+      var elementosComidos=0;
+
+       //Seccion mundo
+      function random(min, max) {
+        return Math.floor(Math.random() * 4);
+      }
+      var mundo = [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 0, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 0, 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), random(0,3), 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+      ];
+
+      var diccionarioMundo = {
+        0: "blank",
+        1: "pared",
+        2: "burguer",
+        3: "papitas",
+      };
+
+      function dibujarMundo() {
+        var output = "";
+        for (var fila = 0; fila < mundo.length; fila++) {
+          output += "<div class='fila'>";
+          for (var colum = 0; colum < mundo[fila].length; colum++) {
+            output +=
+              "<div class= '" +
+              diccionarioMundo[mundo[fila][colum]] +
+              "'></div>";
+          }
+          output += "</div>";
+        }
+        document.getElementById("mundo").innerHTML = output;
+      }
+      dibujarMundo();
+
+      function contarElementosMundo(){
+        var contador=0;
+        for (var fila=0;fila<mundo.length;fila++){
+          for(var colum=0;colum<mundo[fila].length;colum++){
+            if(mundo[fila][colum]==2 || mundo[fila][colum]==3){
+              contador++;
+            }
+          }
+        }
+        return contador;
+      }
+
+      var elementosEnElMundo=contarElementosMundo();
+
+      //Seccion gato
+      var gato = {
+        x: 1,
+        y: 1,
+      };
+
+      function dibujarGato() {
+        document.getElementById("gato").style.top = gato.y * 40 + "px";
+        document.getElementById("gato").style.left = gato.x * 40 + "px";
+      }
+      dibujarGato();
+
+      //Seccion manejo de teclas del gato
+      var gatoSeMovio = false;
+      document.onkeydown = function (e) {
+        var movio = false;
+        console.log(e);
+        if (e.keyCode === 37) {
+          // Izquierda
+          if (mundo[gato.y][gato.x - 1] !== 1) {
+            gato.x--;
+            movio = true;
+          }
+        } else if (e.keyCode === 39) {
+          // Derecha
+          if (mundo[gato.y][gato.x + 1] !== 1) {
+            gato.x++;
+            movio = true;
+          }
+        } else if (e.keyCode === 40) {
+          // Abajo
+          if (mundo[gato.y + 1][gato.x] !== 1) {
+            gato.y++;
+            movio = true;
+          }
+        } else if (e.keyCode === 38) {
+          // Arriba
+          if (mundo[gato.y - 1][gato.x] !== 1) {
+            gato.y--;
+            movio = true;
+          }
+        }
+
+        //Seccion de comprobacion de movimientos y aumento de puntajes
+        if (movio===true) {
+          gatoSeMovio = true; 
+        }
+
+        if (mundo[gato.y][gato.x] == 2) {
+          mundo[gato.y][gato.x] = 0;
+          elementosComidos++;
+          puntaje += 10;
+          console.log("puntaje actual:" + puntaje);
+        } else if (mundo[gato.y][gato.x] == 3) {
+          elementosComidos++;
+          mundo[gato.y][gato.x] = 0;
+          puntaje += 5;
+          console.log("puntaje actual:" + puntaje);
+        }
+        dibujarMundo();
+        dibujarGato();
+      };
+
+      //Seccion perro
+      var perro = {
+        x: 2,
+        y: 7,
+      };
+
+      function dibujarPerro() {
+        document.getElementById("perro").style.top = perro.y * 40 + "px";
+        document.getElementById("perro").style.left = perro.x * 40 + "px";
+      }
+      dibujarPerro();
+
+      //movimiento del perro basado en la posicion del gato para simular mejor el perseguir
+      function muevePerro() {
+        if (gato.x < perro.x && mundo[perro.y][perro.x - 1] !== 1) {
+          //izquierda
+          perro.x--;
+        } else if (gato.x > perro.x && mundo[perro.y][perro.x + 1] !== 1) {
+          //derecha
+          perro.x++;
+        } else if (gato.y < perro.y && mundo[perro.y - 1][perro.x] !== 1) {
+          //arriba
+          perro.y--;
+        } else if (gato.y > perro.y && mundo[perro.y + 1][perro.x] !== 1) {
+          //abajo
+          perro.y++;
+        }
+      }
+
+      //Seccion de bucle del juego
+      function bucle() {
+          dibujarPerro();
+          dibujarGato();
+
+          if(gatoSeMovio){
+            muevePerro()
+          }
+
+          //Seccion de manejo de vidas y finalizacion del juego
+          if (gato.x === perro.x && gato.y === perro.y) {
+            vidas--;
+            console.log("Vidas: " + vidas);
+            gato.x = 1;
+            gato.y = 1;
+
+            if (vidas <= 0) {
+              document.write("Game Over! Puntaje: " + puntaje);
+              return;
+            }
+          }
+
+          if(elementosComidos===elementosEnElMundo){
+              document.write("You won the game! Puntaje: " + puntaje);
+              return;
+          }
+        setTimeout(bucle, 500);
+      }
+      bucle();
+    </script>
+  </body>
+</html>

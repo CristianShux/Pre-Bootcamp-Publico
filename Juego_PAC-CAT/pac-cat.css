@@ -1,0 +1,64 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+.fila {
+  line-height: 0;
+}
+.pared {
+  background-color: purple;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+.burguer {
+  background-color: black;
+  background-image: url("img-pac-cat/burguer.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+.papitas {
+  background-color: black;
+  background-image: url("img-pac-cat/papitas.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+
+
+.blank {
+  background-color: black;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+#gato {
+  background-color: black;
+  background: url("img-pac-cat/gato.gif");
+  background-size: contain;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
+
+#perro{
+    background-color: black;
+  background: url("img-pac-cat/perro.gif");
+  background-size: contain;
+  position: absolute;
+  height: 40px;
+  width: 40px;
+  display: inline-block;
+}
