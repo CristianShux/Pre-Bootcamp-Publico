@@ -1,0 +1,71 @@
+<html>
+  <body>
+    <div
+      id="background"
+      style="width: 900px; height: 750px; border: 3px solid black"
+    >
+      <div
+        id="gatito"
+        style="
+          position: absolute;
+          top: 150px;
+          left: 150px;
+          background: url('img/abajo1.png') no-repeat;
+          width: 60px;
+          height: 50px;
+          background-size: contain;
+        "
+      ></div>
+    </div>
+    <script type="text/javascript">
+      var posicionIzq = 150;
+      var posicionArriba = 150;
+      var movimiento = 1;
+      document.onkeydown = function (e) {
+        console.log(e);
+        if (movimiento == 1) {
+          movimiento = 2;
+        } else if (movimiento == 2) {
+          movimiento = 1;
+        }
+        if (e.keyCode == 37) {
+          // Izquierda
+          posicionIzq = posicionIzq - 25;
+          if (posicionIzq <= 0) {
+            posicionIzq = 0;
+          }
+          document.getElementById("gatito").style.left = posicionIzq + "px";
+          document.getElementById("gatito").style.backgroundImage =
+            "url('img/izq" + movimiento + ".png')";
+        } else if (e.keyCode == 39) {
+          // Derecha
+          posicionIzq = posicionIzq + 25;
+          if (posicionIzq >= 900 - 60) { // 900 ancho del fondo - 60 ancho del gatito
+            posicionIzq = 900 - 60;
+          }
+          document.getElementById("gatito").style.left = posicionIzq + "px";
+          document.getElementById("gatito").style.backgroundImage =
+            "url('img/der" + movimiento + ".png')";
+        } else if (e.keyCode == 38) {
+          // Arriba
+          posicionArriba = posicionArriba - 25;
+          if (posicionArriba <= 0) {
+            posicionArriba = 0;
+          }
+          document.getElementById("gatito").style.top = posicionArriba + "px";
+          document.getElementById("gatito").style.backgroundImage =
+            "url('img/arriba" + movimiento + ".png')";
+        } else if (e.keyCode == 40) {
+          // Abajo
+          posicionArriba = posicionArriba + 25;
+          if (posicionArriba >= 750 - 60) { // 750 alto del fondo - 50 alto del gatito
+            posicionArriba = 750 - 60;
+          }
+          document.getElementById("gatito").style.backgroundImage =
+            "url('img/abajo" + movimiento + ".png')";
+          document.getElementById("gatito").style.top = posicionArriba + "px";
+        }
+      };
+    </script>
+  </body>
+</html>
