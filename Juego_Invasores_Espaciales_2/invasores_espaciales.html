@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invasores espaciales</title>
+    <link rel="stylesheet" href="invasores_espaciales.css" />
+  </head>
+  <body>
+    <div id="espacio">
+      <div id="naves"></div>
+      <div id="aliens"></div>
+      <div id="disparos"></div>
+    </div>
+    <script type="text/javascript">
+      //Seccion de aliens
+      var aliens = [
+        { left: 350, top: 100 },
+        { left: 450, top: 90 },
+        { left: 600, top: 95 },
+        { left: 800, top: 80 },
+        { left: 900, top: 85 },
+        { left: 200, top: 70 },
+      ];
+
+      function dibujarAliens() {
+        contenido = "";
+        console.log(aliens);
+        for (var x = 0; x < aliens.length; x++) {
+          contenido +=
+            "<div class='alien' style='left:" +
+            aliens[x].left +
+            "px; top:" +
+            aliens[x].top +
+            "px'></div>";
+        }
+        document.getElementById("aliens").innerHTML = contenido;
+      }
+
+      dibujarAliens();
+
+      function moverAliens() {
+        for (var x = 0; x < aliens.length; x++) {
+          if (aliens[x].top < 500) {
+            aliens[x].top += 10; //Mientras mas le sume mas sera el desplazamiento de los aliens y parecera que van mas rapido
+          }
+        }
+      }
+
+      //Seccion disparos
+      var disparos = [];
+      function dibujarDisparos() {
+        contenido = "";
+        for (var x = 0; x < disparos.length; x++) {
+          contenido +=
+            "<div class='disparo' style='left:" +
+            disparos[x].left +
+            "px; top:" +
+            disparos[x].top +
+            "px'></div>";
+        }
+        document.getElementById("disparos").innerHTML = contenido;
+      }
+      dibujarDisparos();
+
+      function moverDisparos() {
+        for (var x = 0; x < disparos.length; x++) {
+          disparos[x].top -= 20; //Si restamos un numero mas grande de la posicion top del disparo parecera que se desplaza mas rapido hacia arriba
+        }
+      }
+
+      //Seccion nave
+      var nave = {
+        left: 650,
+        top: 500,
+      };
+
+      function dibujarNave() {
+        var contenido =
+          "<div class='nave' style='left:" +
+          nave.left +
+          "px; top:" +
+          nave.top +
+          "px'></div>";
+        document.getElementById("naves").innerHTML = contenido;
+      }
+
+      dibujarNave();
+
+      //manejo de teclas
+      document.onkeydown = function (e) {
+        console.log(e);
+        if (e.keyCode === 37 && nave.left >= 10) {
+          // Izquierda
+          nave.left -= 10;
+        } else if (e.keyCode === 39 && nave.left <= 1288) {
+          // Derecha
+          nave.left += 10;
+        } else if (e.keyCode === 40 && nave.top <= 519) {
+          // Abajo
+          nave.top += 10;
+        } else if (e.keyCode === 38 && nave.top >= 410) {
+          // Arriba
+          nave.top -= 10;
+        } else if (e.keyCode === 32) {
+          disparos.push({ left: nave.left + 16, top: nave.top - 30 });
+          dibujarDisparos();
+        }
+        dibujarNave();
+      };
+
+      //Seccion buble
+      function bucle() {
+        moverAliens();
+        dibujarAliens();
+
+        moverDisparos();
+        dibujarDisparos();
+
+        setTimeout(bucle, 150);
+      }
+      bucle();
+    </script>
+  </body>
+</html>

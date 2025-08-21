@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#espacio {
+  background-image: url(img-invasores-espaciales/fondoSpaceInvaders.jpg);
+  width: 100vw;
+  height: 100vh; /* esto es excelente para fondos porque se adapta completamente a la pantalla */
+}
+
+.nave {
+  position: absolute;
+  background-image: url(img-invasores-espaciales/naveNueva.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 70px;
+  height: 80px;
+}
+
+.alien {
+  position: absolute;
+  background-image: url(img-invasores-espaciales/alienNuevo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px;
+}
+
+.disparo{ /*Uso una imagen para que sea mas entretenido */
+  position: absolute;
+  background-image: url(img-invasores-espaciales/disparo.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 60px;
+  height: 60px;
+}
